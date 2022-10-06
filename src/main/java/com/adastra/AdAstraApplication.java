@@ -1,13 +1,13 @@
-package com.heavyware;
+package com.adastra;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HeavyWareApplication {
+public class AdAstraApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HeavyWareApplication.class, args);
+		SpringApplication.run(AdAstraApplication.class, args);
 	}
 
 }

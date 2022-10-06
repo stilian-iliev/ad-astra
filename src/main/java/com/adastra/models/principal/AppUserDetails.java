@@ -1,4 +1,4 @@
-package com.heavyware.models.principal;
+package com.adastra.models.principal;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

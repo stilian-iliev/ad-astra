@@ -1,8 +1,8 @@
-package com.heavyware.configuration;
+package com.adastra.configuration;
 
-import com.heavyware.models.enumerations.UserRoleEnum;
-import com.heavyware.repositories.UserRepository;
-import com.heavyware.services.UserDetailsServiceImpl;
+import com.adastra.models.enumerations.UserRoleEnum;
+import com.adastra.repositories.UserRepository;
+import com.adastra.services.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

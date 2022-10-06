@@ -1,4 +1,4 @@
-package com.heavyware.models;
+package com.adastra.models;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;

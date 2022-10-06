@@ -1,14 +1,11 @@
-package com.heavyware.services;
+package com.adastra.services;
 
-import com.heavyware.models.User;
-import com.heavyware.models.principal.AppUserDetails;
-import com.heavyware.repositories.UserRepository;
-import org.springframework.security.core.GrantedAuthority;
+import com.adastra.models.User;
+import com.adastra.models.principal.AppUserDetails;
+import com.adastra.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.List;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 
