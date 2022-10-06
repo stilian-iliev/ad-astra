@@ -3,10 +3,8 @@ package com.adastra.models;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,9 +19,18 @@ public class User {
     )
     @Type(type = "uuid-char")
     private UUID id;
-    //todo
 
+    @Column(nullable = false)
     private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Publication> publications;
+
+    @ManyToMany
+    private Set<UserRole> roles;
 
     public UUID getId() {
         return id;
@@ -31,5 +38,17 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Set<Publication> getPublications() {
+        return publications;
+    }
+
+    public Set<UserRole> getRoles() {
+        return roles;
     }
 }
