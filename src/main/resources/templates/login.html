@@ -14,12 +14,13 @@
             <p>Please fill all fields.</p>
         </div>
     </div>
-    <form >
+    <form th:method="post" th:action="@{/login}">
         <div class="row space-top">
             <div class="col-md-4">
+                <p class="err-text" th:if="${badCredentials}">Incorrect username or password</p>
                 <div class="form-group">
-                    <label class="form-control-label" for="email">Email</label>
-                    <input class="form-control" id="email" type="text" name="email">
+                    <label class="form-control-label" for="username">Username</label>
+                    <input class="form-control" id="username" type="text" name="username" th:value="${username}">
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="password">Password</label>

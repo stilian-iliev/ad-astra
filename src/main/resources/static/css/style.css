@@ -211,3 +211,12 @@ img {
 .is-invalid {
     border-left: 2px solid red;
 }
+
+#logout-form {
+    display: inline-block;
+}
+
+.err-text {
+    font-weight: bold;
+    color: red;
+}

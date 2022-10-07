@@ -30,7 +30,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Publication> publications;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRole> roles;
 
     public User() {

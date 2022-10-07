@@ -5,7 +5,11 @@
     <div id="user">
       <a id="createLink" href="/create" >Create Publication</a>
       <a id="profileLink" href="/my-publications" >My Publications</a>
-      <a id="logoutBtn" href="javascript:void(0)">Logout</a>
+      <form id="logout-form" th:action="@{/logout}" th:method="post">
+        <a id="logoutBtn" href="#" onclick="document.querySelector('#logout-form').submit();">
+          Logout
+        </a>
+      </form>
     </div>
     <div id="guest">
       <a id="loginLink" href="/login">Login</a>

@@ -14,24 +14,31 @@
       <p>Please fill all fields.</p>
     </div>
   </div>
-  <form th:method="post" th:action="@{/register}">
+  <form th:method="post" th:action="@{/register}" th:object="${registerDto}">
     <div class="row space-top">
       <div class="col-md-4">
+        <p class="err-text" th:if="${#fields.hasErrors('username')}">Username is taken</p>
+        <p class="err-text" th:if="${#fields.hasErrors('password')}">Password must be between 8 and 32 characters</p>
+        <p class="err-text" th:if="${#fields.hasErrors('confirmPassword')}">Passwords must be matching</p>
 
         <div class="form-group">
           <label class="form-control-label" for="username">Username</label>
           <input class='form-control' id="username" type="text"
-          name="username">
+          th:field="*{username}"
+          th:errorclass="is-invalid">
+
         </div>
         <div class="form-group">
           <label class="form-control-label" for="password">Password</label>
           <input class="form-control" id="password" type="password"
-          name="password">
+          th:field="*{password}"
+          th:errorclass="is-invalid">
         </div>
         <div class="form-group">
           <label class="form-control-label" for="password">Confirm Password</label>
           <input class="form-control" id="confirm" type="password"
-                 name="confirmPassword">
+                 th:field="*{confirmPassword}"
+                 th:errorclass="is-invalid">
         </div>
         <input type="submit" class="btn btn-primary" value="Register" />
       </div>
