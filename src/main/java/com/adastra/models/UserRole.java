@@ -12,13 +12,21 @@ public class UserRole {
     private long id;
 
     @Column(nullable = false)
-    private UserRoleEnum roleName;
+    @Enumerated(EnumType.STRING)
+    private UserRoleEnum name;
+
+    public UserRole() {
+    }
+
+    public UserRole(UserRoleEnum name) {
+        this.name = name;
+    }
 
     public long getId() {
         return id;
     }
 
-    public UserRoleEnum getRoleName() {
-        return roleName;
+    public UserRoleEnum getName() {
+        return name;
     }
 }

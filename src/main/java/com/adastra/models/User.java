@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,6 +33,11 @@ public class User {
     @ManyToMany
     private Set<UserRole> roles;
 
+    public User() {
+        this.roles = new HashSet<>();
+        this.publications = new HashSet<>();
+    }
+
     public UUID getId() {
         return id;
     }
@@ -50,5 +56,29 @@ public class User {
 
     public Set<UserRole> getRoles() {
         return roles;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPublications(Set<Publication> publications) {
+        this.publications = publications;
+    }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(UserRole role) {
+        roles.add(role);
     }
 }
