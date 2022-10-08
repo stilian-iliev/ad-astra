@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="~{/fragments/head.html}">
+
+    <title>Title</title>
+</head>
+<body>
+<th:block th:include="~{/fragments/header.html}"> </th:block>
+
+<div class="container">
+    <div class="row space-top">
+        <div class="col-md-12">
+            <h1>Create New Furniture</h1>
+            <p>Please fill all fields.</p>
+        </div>
+    </div>
+    <form th:method="post" th:action="@{/publications/create}">
+        <div class="row space-top">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-control-label" for="new-title">Title</label>
+                    <input class="form-control valid" id="new-title" type="text" name="title">
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-control-label" for="new-image">Image</label>
+                    <input class="form-control" id="new-image" type="text" name="img">
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="form-control-label" for="new-description">Description</label>
+                    <textarea class="form-control" id="new-description" name="description"></textarea>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Create" style="margin:auto;"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+

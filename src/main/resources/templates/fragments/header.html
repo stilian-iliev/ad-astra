@@ -3,17 +3,17 @@
   <nav>
     <a id="catalogLink" href="/" class="active">Explore</a>
     <div id="user">
-      <a id="createLink" href="/create" >Create Publication</a>
-      <a id="profileLink" href="/my-publications" >My Publications</a>
-      <form id="logout-form" th:action="@{/logout}" th:method="post">
+      <a id="createLink" href="/publications/create" sec:authorize="isAuthenticated()">Create Publication</a>
+      <a id="profileLink" href="/my-publications" sec:authorize="isAuthenticated()">My Publications</a>
+      <form id="logout-form" th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
         <a id="logoutBtn" href="#" onclick="document.querySelector('#logout-form').submit();">
           Logout
         </a>
       </form>
     </div>
     <div id="guest">
-      <a id="loginLink" href="/login">Login</a>
-      <a id="registerLink" href="/register">Register</a>
+      <a id="loginLink" href="/login" sec:authorize="!isAuthenticated()">Login</a>
+      <a id="registerLink" href="/register" sec:authorize="!isAuthenticated()">Register</a>
     </div>
   </nav>
 </header>
