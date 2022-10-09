@@ -14,26 +14,32 @@
             <p>Please fill all fields.</p>
         </div>
     </div>
-    <form th:method="post" th:action="@{/publications/create}">
+    <form th:method="post" th:action="@{/publications/create}" th:object="${createPublicationDto}">
         <div class="row space-top">
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="form-control-label" for="new-title">Title</label>
-                    <input class="form-control valid" id="new-title" type="text" name="title">
+                    <input class="form-control valid" id="new-title" type="text"
+                    th:field="*{title}"
+                    th:errorclass="is-invalid">
                 </div>
 
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="form-control-label" for="new-image">Image</label>
-                    <input class="form-control" id="new-image" type="text" name="img">
+                    <input class="form-control" id="new-image" type="text"
+                    th:field="*{image}"
+                    th:errorclass="is-invalid">
                 </div>
 
             </div>
             <div class="col-md-8">
                 <div class="form-group">
                     <label class="form-control-label" for="new-description">Description</label>
-                    <textarea class="form-control" id="new-description" name="description"></textarea>
+                    <textarea class="form-control" id="new-description"
+                    th:field="*{description}"
+                    th:errorclass="is-invalid"></textarea>
                 </div>
             </div>
             <input type="submit" class="btn btn-primary" value="Create" style="margin:auto;"/>

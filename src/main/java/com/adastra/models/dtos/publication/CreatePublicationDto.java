@@ -2,7 +2,7 @@ package com.adastra.models.dtos.publication;
 
 public class CreatePublicationDto {
     private String title;
-    private String imageUrl;
+    private String image;
     private String description;
 
     public String getTitle() {
@@ -13,12 +13,12 @@ public class CreatePublicationDto {
         this.title = title;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getDescription() {

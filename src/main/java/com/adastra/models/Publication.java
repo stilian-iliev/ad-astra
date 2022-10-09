@@ -60,4 +60,20 @@ public class Publication {
     public LocalDateTime getPublicationTime() {
         return publicationTime;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
