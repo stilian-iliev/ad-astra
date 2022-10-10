@@ -2,6 +2,7 @@ package com.adastra.services;
 
 import com.adastra.models.Publication;
 import com.adastra.models.dtos.publication.CreatePublicationDto;
+import com.adastra.models.dtos.publication.PublicationDetailsDto;
 import com.adastra.repositories.PublicationRepository;
 import com.adastra.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -25,5 +26,9 @@ public class PublicationService {
         Publication publication = mapper.map(createPublicationDto, Publication.class);
         publication.setUser(userRepository.findById(userId).orElseThrow());
         return publicationRepository.save(publication).getId();
+    }
+
+    public PublicationDetailsDto findById(UUID id) {
+        return publicationRepository.findById(id).map(PublicationDetailsDto::new).orElseThrow();
     }
 }

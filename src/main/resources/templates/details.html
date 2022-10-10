@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="~{/fragments/head.html}">
+
+    <title>Title</title>
+</head>
+<body>
+<th:block th:include="~{/fragments/header.html}"> </th:block>
+
+<div class="container" th:object="${publication}">
+    <div class="row space-top">
+        <div class="col-md-12">
+            <h1 th:text="*{title}"></h1>
+        </div>
+    </div>
+    <div class="row space-top">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <img th:src=*{image} />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <p>User: <span th:text="*{user}"></span></p>
+            <p>Description: <span th:text="*{description}"></span></p>
+            <div>
+                <a href=${`/edit/${item._id}`} class="btn btn-info">Edit</a>
+                <a href="javascript:void(0)" class="btn btn-red">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
