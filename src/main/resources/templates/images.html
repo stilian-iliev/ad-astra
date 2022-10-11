@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="~{/fragments/head.html}">
+
+    <title>Title</title>
+</head>
+<body>
+<th:block th:include="~{/fragments/header.html}"> </th:block>
+
+<div class="container">
+    <div class="row space-top">
+        <div class="col-md-12">
+            <h1>Welcome to AdAstra</h1>
+            <p>Lorem ipsum</p>
+        </div>
+    </div>
+    <div class="row space-top">
+        <div class="col-md-4" th:each="publication : ${publications}">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <img th:src=${publication.image} />
+                    <p th:text="${publication.title}"></p>
+                    <div>
+                        <a th:href="@{/publications/{id}(id=${publication.id})}" class="btn btn-info">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,10 +1,10 @@
 <header>
   <h1><a href="/">AdAstra</a></h1>
   <nav>
-    <a id="catalogLink" href="/" class="active">Explore</a>
+    <a id="catalogLink" href="/images/all" class="active">Explore</a>
     <div id="user">
-      <a id="createLink" href="/publications/create" sec:authorize="isAuthenticated()">Create Publication</a>
-      <a id="profileLink" href="/my-publications" sec:authorize="isAuthenticated()">My Publications</a>
+      <a id="createLink" href="/images/upload" sec:authorize="isAuthenticated()">Upload Image</a>
+      <a id="profileLink" href="/images" sec:authorize="isAuthenticated()">My Images</a>
       <form id="logout-form" th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
         <a id="logoutBtn" href="#" onclick="document.querySelector('#logout-form').submit();">
           Logout

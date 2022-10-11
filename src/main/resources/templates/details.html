@@ -14,13 +14,16 @@
         </div>
     </div>
     <div class="row space-top">
-        <div class="col-md-4">
+        <div class="col-md-8">
             <div class="card text-white bg-primary">
                 <div class="card-body">
                     <img th:src=*{image} />
                 </div>
             </div>
         </div>
+
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <p>User: <span th:text="*{user}"></span></p>
             <p>Description: <span th:text="*{description}"></span></p>
@@ -28,6 +31,11 @@
                 <a href=${`/edit/${item._id}`} class="btn btn-info">Edit</a>
                 <a href="javascript:void(0)" class="btn btn-red">Delete</a>
             </div>
+        </div>
+        <div class="col-md-4">
+            <p>Date: <span th:text="*{date}"></span></p>
+            <p>Resolution: <span ></span></p>
+            <button>Download</button>
         </div>
     </div>
 </div>

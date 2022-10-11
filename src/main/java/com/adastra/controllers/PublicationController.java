@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/publications")
+@RequestMapping("/images")
 public class PublicationController {
     private final PublicationService publicationService;
 
@@ -26,14 +26,21 @@ public class PublicationController {
         this.publicationService = publicationService;
     }
 
-    @GetMapping("/create")
+    @GetMapping("/all")
+    public String getExplore(Model model) {
+        if (!model.containsAttribute("publications"))
+            model.addAttribute("publications", publicationService.getAllPublicationItems());
+        return "images";
+    }
+
+    @GetMapping("/upload")
     public String getAdd(Model model) {
         if (!model.containsAttribute("createPublicationDto"))
             model.addAttribute("createPublicationDto", new CreatePublicationDto());
         return "create";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/upload")
     public String create(@Valid CreatePublicationDto createPublicationDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, @AuthenticationPrincipal AppUserDetails userDetails) {
         if (bindingResult.hasErrors()) {
 
