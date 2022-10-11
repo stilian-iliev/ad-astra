@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:include="~{/fragments/head.html}">
-
-    <title>Title</title>
+<head>
+    <th:block th:replace="~{/fragments/head.html}"></th:block>
+    <title>Explore</title>
 </head>
 <body>
 <th:block th:include="~{/fragments/header.html}"> </th:block>
@@ -21,7 +21,7 @@
                     <img th:src=${publication.image} />
                     <p th:text="${publication.title}"></p>
                     <div>
-                        <a th:href="@{/publications/{id}(id=${publication.id})}" class="btn btn-info">Details</a>
+                        <a th:href="@{/images/{id}(id=${publication.id})}" class="btn btn-info">Details</a>
                     </div>
                 </div>
             </div>

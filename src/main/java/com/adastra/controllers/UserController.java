@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String getUserPublications(Model model, @PathVariable UUID userId) {
+    public String getUserPublications(Model model, @PathVariable("id") UUID userId) {
         model.addAttribute("publications",userService.getAllPublications(userId));
         model.addAttribute("username",userId);
 

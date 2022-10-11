@@ -4,7 +4,7 @@
     <a id="catalogLink" href="/images/all" class="active">Explore</a>
     <div id="user">
       <a id="createLink" href="/images/upload" sec:authorize="isAuthenticated()">Upload Image</a>
-      <a id="profileLink" href="/images" sec:authorize="isAuthenticated()">My Images</a>
+      <a id="profileLink" th:href="@{/users/{id}(id=${#authentication.principal.id})}" sec:authorize="isAuthenticated()">My Images</a>
       <form id="logout-form" th:action="@{/logout}" th:method="post" sec:authorize="isAuthenticated()">
         <a id="logoutBtn" href="#" onclick="document.querySelector('#logout-form').submit();">
           Logout

@@ -56,7 +56,6 @@ public class AuthController {
                                 RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("username", userName);
         redirectAttributes.addFlashAttribute("badCredentials", true);
-        System.out.println("bad");
         return "redirect:/login";
     }
 }
