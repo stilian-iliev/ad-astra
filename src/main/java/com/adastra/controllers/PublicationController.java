@@ -5,14 +5,12 @@ import com.adastra.models.dtos.publication.EditPublicationDto;
 import com.adastra.models.dtos.publication.PublicationDetailsDto;
 import com.adastra.models.principal.AppUserDetails;
 import com.adastra.services.PublicationService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -38,7 +36,7 @@ public class PublicationController {
     public String getAdd(Model model) {
         if (!model.containsAttribute("createPublicationDto"))
             model.addAttribute("createPublicationDto", new CreatePublicationDto());
-        return "create";
+        return "upload";
     }
 
     @PostMapping("/upload")
@@ -64,5 +62,12 @@ public class PublicationController {
         model.addAttribute("editPublicationDto", publicationService.getById(id));
 //        System.out.println(id);
         return "edit";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @publicationService.isOwner(#userDetails, #id)")
+    @DeleteMapping("/{id}")
+    public String deletePublication(@PathVariable("id") UUID id, @AuthenticationPrincipal AppUserDetails userDetails) {
+        publicationService.deletePublication(id);
+        return "redirect:/publications/all";
     }
 }

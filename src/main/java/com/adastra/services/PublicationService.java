@@ -4,6 +4,7 @@ import com.adastra.models.Publication;
 import com.adastra.models.dtos.publication.CreatePublicationDto;
 import com.adastra.models.dtos.publication.PublicationDetailsDto;
 import com.adastra.models.dtos.publication.PublicationItemDto;
+import com.adastra.models.principal.AppUserDetails;
 import com.adastra.repositories.PublicationRepository;
 import com.adastra.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -26,6 +27,12 @@ public class PublicationService {
         this.mapper = mapper;
     }
 
+    public boolean isOwner(AppUserDetails userDetails, UUID publicationId) {
+        if (userDetails == null) return false;
+        UUID ownerId = publicationRepository.findById(publicationId).orElseThrow().getUser().getId();
+        return ownerId.equals(userDetails.getId());
+    }
+
     public UUID create(CreatePublicationDto createPublicationDto, UUID userId) {
         Publication publication = mapper.map(createPublicationDto, Publication.class);
         publication.setUser(userRepository.findById(userId).orElseThrow());
@@ -42,5 +49,9 @@ public class PublicationService {
 
     public Publication getById(UUID id) {
         return publicationRepository.findById(id).orElseThrow();
+    }
+
+    public void deletePublication(UUID id) {
+        publicationRepository.deleteById(id);
     }
 }

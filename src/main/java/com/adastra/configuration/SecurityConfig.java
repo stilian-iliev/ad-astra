@@ -6,6 +6,7 @@ import com.adastra.services.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Bean
@@ -30,9 +32,11 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login", "/register").anonymous()
                 .antMatchers("/admin").hasRole(UserRoleEnum.ADMIN.name())
+                .antMatchers("/publications/upload").authenticated()
+                .antMatchers("/").permitAll()
+                .antMatchers("/publications/all", "/publications/*").permitAll()
+                .antMatchers("/login", "/register").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

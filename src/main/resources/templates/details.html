@@ -29,7 +29,8 @@
             <p>Description: <span th:text="*{description}"></span></p>
             <div th:if="${isOwner}">
                 <a th:href=@{/publications/{id}/edit(id=*{id})} class="btn btn-info">Edit</a>
-                <a href="javascript:void(0)" class="btn btn-red">Delete</a>
+                <a class="btn btn-red" id="delBtn" onclick="document.querySelector('#deleteImgModal').style.display = 'block'">Delete</a>
+
             </div>
         </div>
         <div class="col-md-4">
@@ -37,6 +38,22 @@
             <p>Date: <span th:text="*{date}"></span></p>
         </div>
     </div>
+    <div id="deleteImgModal" class="modal">
+
+        <div class="modal-content">
+            <span class="modal_close" onclick="document.querySelector('#deleteImgModal').style.display = 'none'">&times;</span>
+            <p>Are you sure you want to delete "<span th:text="*{title}"></span>"</p>
+            <div>
+                <form th:action="@{/publications/{id}(id=*{id})}" th:method="delete" id="deleteForm" class="inline-form">
+                    <a class="btn btn-info" onclick="document.querySelector('#deleteForm').submit()">Yes</a>
+                </form>
+                <a class="btn btn-info" onclick="document.querySelector('#deleteImgModal').style.display = 'none'">No</a>
+
+            </div>
+        </div>
+
+    </div>
 </div>
+
 </body>
 </html>
