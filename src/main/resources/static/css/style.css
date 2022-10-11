@@ -229,3 +229,7 @@ img {
     font-weight: bold;
     color: red;
 }
+
+.text-center {
+    text-align: center;
+}

@@ -17,7 +17,7 @@
         <div class="col-md-8">
             <div class="card text-white bg-primary">
                 <div class="card-body">
-                    <img th:src=*{image} />
+                    <a th:href="*{image}"><img th:src=*{image} /></a>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <p>User: <span th:text="*{user}"></span></p>
+
             <p>Description: <span th:text="*{description}"></span></p>
             <div>
                 <a href=${`/edit/${item._id}`} class="btn btn-info">Edit</a>
@@ -33,9 +33,8 @@
             </div>
         </div>
         <div class="col-md-4">
+            <p>User: <a th:text="*{user}" th:href="@{/users/{id}(id=*{userId})}"></a></p>
             <p>Date: <span th:text="*{date}"></span></p>
-            <p>Resolution: <span ></span></p>
-            <button>Download</button>
         </div>
     </div>
 </div>
