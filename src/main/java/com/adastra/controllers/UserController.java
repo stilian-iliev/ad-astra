@@ -21,7 +21,7 @@ public class UserController {
     @GetMapping("/{id}")
     public String getUserPublications(Model model, @PathVariable("id") UUID userId) {
         model.addAttribute("publications",userService.getAllPublications(userId));
-        model.addAttribute("username",userId);
+        model.addAttribute("username", userService.getUsernameById(userId));
 
         return "user-images";
     }

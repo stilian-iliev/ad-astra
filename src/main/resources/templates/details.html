@@ -27,8 +27,8 @@
         <div class="col-md-4">
 
             <p>Description: <span th:text="*{description}"></span></p>
-            <div>
-                <a href=${`/edit/${item._id}`} class="btn btn-info">Edit</a>
+            <div th:if="${isOwner}">
+                <a th:href=@{/publications/{id}/edit(id=*{id})} class="btn btn-info">Edit</a>
                 <a href="javascript:void(0)" class="btn btn-red">Delete</a>
             </div>
         </div>

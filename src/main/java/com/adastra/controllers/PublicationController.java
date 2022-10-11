@@ -1,6 +1,7 @@
 package com.adastra.controllers;
 
 import com.adastra.models.dtos.publication.CreatePublicationDto;
+import com.adastra.models.dtos.publication.EditPublicationDto;
 import com.adastra.models.dtos.publication.PublicationDetailsDto;
 import com.adastra.models.principal.AppUserDetails;
 import com.adastra.services.PublicationService;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/images")
+@RequestMapping("/publications")
 public class PublicationController {
     private final PublicationService publicationService;
 
@@ -30,7 +31,7 @@ public class PublicationController {
     public String getExplore(Model model) {
         if (!model.containsAttribute("publications"))
             model.addAttribute("publications", publicationService.getAllPublicationItems());
-        return "images";
+        return "publications";
     }
 
     @GetMapping("/upload")
@@ -51,9 +52,17 @@ public class PublicationController {
     }
 
     @GetMapping("/{id}")
-    public String getDetails(@PathVariable UUID id, Model model) {
+    public String getDetails(@PathVariable("id") UUID id, Model model, @AuthenticationPrincipal AppUserDetails userDetails) {
         PublicationDetailsDto publication = publicationService.findById(id);
         model.addAttribute("publication", publication);
+        model.addAttribute("isOwner", userDetails != null && userDetails.getId().equals(publication.getUserId()));
         return "details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String getEdit(@PathVariable("id") UUID id, Model model) {
+        model.addAttribute("editPublicationDto", publicationService.getById(id));
+//        System.out.println(id);
+        return "edit";
     }
 }

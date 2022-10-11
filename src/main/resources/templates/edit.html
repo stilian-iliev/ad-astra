@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <th:block th:replace="~{/fragments/head.html}"></th:block>
+  <title>Edit Image</title>
+</head>
+<body>
+<th:block th:include="~{/fragments/header.html}"> </th:block>
+
+<div class="container">
+  <div class="row space-top">
+    <div class="col-md-12">
+      <h1>Edit image</h1>
+      <p>Please fill all fields.</p>
+    </div>
+  </div>
+  <form th:method="put" th:action="@{/publications/{id}(id=${editPublicationDto.id})}" th:object="${editPublicationDto}">
+    <div class="row space-top">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="form-control-label" for="new-title">Title</label>
+          <input class="form-control valid" id="new-title" type="text"
+                 th:field="*{title}"
+                 th:errorclass="is-invalid">
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="form-control-label" for="new-image">Image</label>
+          <input class="form-control" id="new-image" type="text"
+                 th:field="*{image}"
+                 th:errorclass="is-invalid">
+        </div>
+
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <label class="form-control-label" for="new-description">Description</label>
+          <textarea class="form-control" id="new-description"
+                    th:field="*{description}"
+                    th:errorclass="is-invalid"></textarea>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Create" style="margin:auto;"/>
+    </div>
+  </form>
+</div>
+</body>
+</html>
+

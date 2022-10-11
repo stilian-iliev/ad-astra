@@ -39,4 +39,8 @@ public class PublicationService {
     public List<PublicationItemDto> getAllPublicationItems() {
         return publicationRepository.findAll().stream().map(PublicationItemDto::new).collect(Collectors.toList());
     }
+
+    public Publication getById(UUID id) {
+        return publicationRepository.findById(id).orElseThrow();
+    }
 }

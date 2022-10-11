@@ -21,7 +21,7 @@
                     <img th:src=${publication.image} />
                     <p th:text="${publication.title}"></p>
                     <div>
-                        <a th:href="@{/images/{id}(id=${publication.id})}" class="btn btn-info">Details</a>
+                        <a th:href="@{/publications/{id}(id=${publication.id})}" class="btn btn-info">Details</a>
                     </div>
                 </div>
             </div>

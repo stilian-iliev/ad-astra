@@ -60,4 +60,8 @@ public class UserService {
     public List<PublicationItemDto> getAllPublications(UUID id) {
         return publicationRepository.findByUserId(id).stream().map(PublicationItemDto::new).collect(Collectors.toList());
     }
+
+    public String getUsernameById(UUID userId) {
+        return userRepository.findById(userId).orElseThrow().getUsername();
+    }
 }
