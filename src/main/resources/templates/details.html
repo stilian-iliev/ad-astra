@@ -27,7 +27,7 @@
         <div class="col-md-4">
 
             <p>Description: <span th:text="*{description}"></span></p>
-            <div th:if="${isOwner}">
+            <div th:if="${isOwner || #authorization.expression('hasRole(''ADMIN'')')}">
                 <a th:href=@{/publications/{id}/edit(id=*{id})} class="btn btn-info">Edit</a>
                 <a class="btn btn-red" id="delBtn" onclick="document.querySelector('#deleteImgModal').style.display = 'block'">Delete</a>
 

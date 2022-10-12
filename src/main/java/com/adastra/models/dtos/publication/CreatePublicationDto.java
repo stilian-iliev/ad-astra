@@ -1,7 +1,11 @@
 package com.adastra.models.dtos.publication;
 
+import javax.validation.constraints.NotBlank;
+
 public class CreatePublicationDto {
+    @NotBlank
     private String title;
+    @NotBlank
     private String image;
     private String description;
 

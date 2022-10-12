@@ -42,8 +42,9 @@ public class PublicationController {
     @PostMapping("/upload")
     public String create(@Valid CreatePublicationDto createPublicationDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, @AuthenticationPrincipal AppUserDetails userDetails) {
         if (bindingResult.hasErrors()) {
-
-            return "redirect:/publications/create";
+            redirectAttributes.addFlashAttribute("createPublicationDto", createPublicationDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createPublicationDto", bindingResult);
+            return "redirect:/publications/upload";
         }
         UUID uuid = publicationService.create(createPublicationDto, userDetails.getId());
         return "redirect:/publications/" + uuid;
@@ -57,11 +58,24 @@ public class PublicationController {
         return "details";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @publicationService.isOwner(#userDetails, #id)")
     @GetMapping("/{id}/edit")
     public String getEdit(@PathVariable("id") UUID id, Model model) {
-        model.addAttribute("editPublicationDto", publicationService.getById(id));
-//        System.out.println(id);
+        if (!model.containsAttribute("editPublicationDto"))
+            model.addAttribute("editPublicationDto", publicationService.getById(id));
         return "edit";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @publicationService.isOwner(#userDetails, #id)")
+    @PutMapping("/{id}")
+    public String edit(@Valid EditPublicationDto editPublicationDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, @PathVariable("id") UUID id) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("editPublicationDto", editPublicationDto);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editPublicationDto", bindingResult);
+            return "redirect:/publications/"+ id + "/edit";
+        }
+        publicationService.editPublication(id, editPublicationDto);
+        return "redirect:/publications/" + id;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or @publicationService.isOwner(#userDetails, #id)")
@@ -70,4 +84,5 @@ public class PublicationController {
         publicationService.deletePublication(id);
         return "redirect:/publications/all";
     }
+
 }

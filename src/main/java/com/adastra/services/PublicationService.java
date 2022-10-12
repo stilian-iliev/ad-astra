@@ -2,13 +2,13 @@ package com.adastra.services;
 
 import com.adastra.models.Publication;
 import com.adastra.models.dtos.publication.CreatePublicationDto;
+import com.adastra.models.dtos.publication.EditPublicationDto;
 import com.adastra.models.dtos.publication.PublicationDetailsDto;
 import com.adastra.models.dtos.publication.PublicationItemDto;
 import com.adastra.models.principal.AppUserDetails;
 import com.adastra.repositories.PublicationRepository;
 import com.adastra.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,5 +53,13 @@ public class PublicationService {
 
     public void deletePublication(UUID id) {
         publicationRepository.deleteById(id);
+    }
+
+    public void editPublication(UUID id, EditPublicationDto editPublicationDto) {
+        Publication publication = publicationRepository.findById(id).orElseThrow();
+        publication.setTitle(editPublicationDto.getTitle());
+        publication.setImage(editPublicationDto.getImage());
+        publication.setDescription(editPublicationDto.getDescription());
+        publicationRepository.save(publication);
     }
 }
