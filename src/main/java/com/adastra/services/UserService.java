@@ -4,9 +4,11 @@ import com.adastra.models.User;
 import com.adastra.models.dtos.publication.PublicationItemDto;
 import com.adastra.models.dtos.user.RegisterDto;
 import com.adastra.models.enumerations.UserRoleEnum;
+import com.adastra.models.exceptions.ObjectNotFoundException;
 import com.adastra.repositories.PublicationRepository;
 import com.adastra.repositories.UserRepository;
 import com.adastra.repositories.UserRoleRepository;
+import com.sun.jdi.ObjectCollectedException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -62,6 +64,6 @@ public class UserService {
     }
 
     public String getUsernameById(UUID userId) {
-        return userRepository.findById(userId).orElseThrow().getUsername();
+        return userRepository.findById(userId).orElseThrow(() -> new ObjectNotFoundException("User not found")).getUsername();
     }
 }

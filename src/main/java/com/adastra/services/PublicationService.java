@@ -5,6 +5,7 @@ import com.adastra.models.dtos.publication.CreatePublicationDto;
 import com.adastra.models.dtos.publication.EditPublicationDto;
 import com.adastra.models.dtos.publication.PublicationDetailsDto;
 import com.adastra.models.dtos.publication.PublicationItemDto;
+import com.adastra.models.exceptions.ObjectNotFoundException;
 import com.adastra.models.principal.AppUserDetails;
 import com.adastra.repositories.PublicationRepository;
 import com.adastra.repositories.UserRepository;
@@ -29,18 +30,18 @@ public class PublicationService {
 
     public boolean isOwner(AppUserDetails userDetails, UUID publicationId) {
         if (userDetails == null) return false;
-        UUID ownerId = publicationRepository.findById(publicationId).orElseThrow().getUser().getId();
+        UUID ownerId = publicationRepository.findById(publicationId).orElseThrow(() -> new ObjectNotFoundException("Publication not found")).getUser().getId();
         return ownerId.equals(userDetails.getId());
     }
 
     public UUID create(CreatePublicationDto createPublicationDto, UUID userId) {
         Publication publication = mapper.map(createPublicationDto, Publication.class);
-        publication.setUser(userRepository.findById(userId).orElseThrow());
+        publication.setUser(userRepository.findById(userId).orElseThrow(() -> new ObjectNotFoundException("User not found")));
         return publicationRepository.save(publication).getId();
     }
 
     public PublicationDetailsDto findById(UUID id) {
-        return publicationRepository.findById(id).map(PublicationDetailsDto::new).orElseThrow();
+        return publicationRepository.findById(id).map(PublicationDetailsDto::new).orElseThrow(() -> new ObjectNotFoundException("Publication not found"));
     }
 
     public List<PublicationItemDto> getAllPublicationItems() {
@@ -48,7 +49,7 @@ public class PublicationService {
     }
 
     public Publication getById(UUID id) {
-        return publicationRepository.findById(id).orElseThrow();
+        return publicationRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Publication not found"));
     }
 
     public void deletePublication(UUID id) {
@@ -56,7 +57,7 @@ public class PublicationService {
     }
 
     public void editPublication(UUID id, EditPublicationDto editPublicationDto) {
-        Publication publication = publicationRepository.findById(id).orElseThrow();
+        Publication publication = publicationRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Publication not found"));
         publication.setTitle(editPublicationDto.getTitle());
         publication.setImage(editPublicationDto.getImage());
         publication.setDescription(editPublicationDto.getDescription());
