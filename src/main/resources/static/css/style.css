@@ -95,6 +95,15 @@ a.active {
     margin: 1rem 0;
 }
 
+.col-md-2 {
+    position: relative;
+    width: 100%;
+    padding-right: 4px;
+    padding-left: 4px;
+    flex: 0 0 24%;
+    max-width: 24%;
+}
+
 .col-md-4 {
     position: relative;
     width: 100%;
@@ -201,7 +210,7 @@ a.active {
 
 .card-body {
     flex: 1 1 auto;
-    min-height: 350px;
+    min-height: 320px;
     padding: 1.25rem;
     background-color: #cccccc;
     text-align: center;
@@ -211,6 +220,10 @@ img {
     width: 100%;
     height: auto;
     background-color: white;
+}
+
+.thumbnail {
+    height: 60%;
 }
 
 .is-valid {
@@ -298,14 +311,13 @@ img {
 
 .sidebar {
 	 width: 100vw;
-	 height: 100vh;
 	 display: flex;
 	 justify-content: center;
 	 align-items: center;
 }
  .widget {
 	 padding: 0.75rem 1.25rem;
-	 width: 278px;
+	 width: 100%;
 	 color: rgba(0, 0, 0, 0.87);
 	 background-color: white;
 	 border-radius: 2px;
