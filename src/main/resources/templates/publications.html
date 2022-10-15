@@ -38,6 +38,7 @@
                     <div class="form-group">
                         <label for="filter">Search By</label>
                         <select class="form-control custom-select" id="filter">
+                            <option th:each="o : ${T(com.adastra.models.enumerations.publication.SearchPublicationCriteria).values()}" th:value="${o}" th:text="${o}"></option>
                             <option>Everything</option>
                             <option>Title</option>
                             <option>Description</option>

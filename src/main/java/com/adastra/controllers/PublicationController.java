@@ -5,6 +5,9 @@ import com.adastra.models.dtos.publication.EditPublicationDto;
 import com.adastra.models.dtos.publication.PublicationDetailsDto;
 import com.adastra.models.principal.AppUserDetails;
 import com.adastra.services.PublicationService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -26,9 +29,11 @@ public class PublicationController {
     }
 
     @GetMapping("/all")
-    public String getExplore(Model model) {
+    public String getExplore(Model model , @PageableDefault(
+            page = 0,
+            size = 20)Pageable pageable){
         if (!model.containsAttribute("publications"))
-            model.addAttribute("publications", publicationService.getAllPublicationItems());
+            model.addAttribute("publications", publicationService.getAllPublicationItems(pageable));
         return "publications";
     }
 

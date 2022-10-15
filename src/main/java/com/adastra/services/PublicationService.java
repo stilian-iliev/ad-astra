@@ -10,6 +10,8 @@ import com.adastra.models.principal.AppUserDetails;
 import com.adastra.repositories.PublicationRepository;
 import com.adastra.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,8 +46,8 @@ public class PublicationService {
         return publicationRepository.findById(id).map(PublicationDetailsDto::new).orElseThrow(() -> new ObjectNotFoundException("Publication not found"));
     }
 
-    public List<PublicationItemDto> getAllPublicationItems() {
-        return publicationRepository.findAll().stream().map(PublicationItemDto::new).collect(Collectors.toList());
+    public Page<PublicationItemDto> getAllPublicationItems(Pageable pageable) {
+        return publicationRepository.findAll(pageable).map(PublicationItemDto::new);
     }
 
     public Publication getById(UUID id) {
