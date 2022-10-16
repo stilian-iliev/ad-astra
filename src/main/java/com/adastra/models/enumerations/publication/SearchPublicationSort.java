@@ -1,13 +1,14 @@
 package com.adastra.models.enumerations.publication;
 
-public enum SearchPublicationCriteria {
-    EVERYTHING("Everything"), TITLE("Title"), DESCRIPTION("Description"), USER("User");
+public enum SearchPublicationSort {
+    NEWEST("Newest"), OLDEST("Oldest"), AZ("A-Z"), ZA("Z-A");
 
     private final String name;
 
-    SearchPublicationCriteria(String name) {
+    SearchPublicationSort(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }

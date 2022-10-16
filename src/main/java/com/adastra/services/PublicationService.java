@@ -1,14 +1,12 @@
 package com.adastra.services;
 
 import com.adastra.models.Publication;
-import com.adastra.models.dtos.publication.CreatePublicationDto;
-import com.adastra.models.dtos.publication.EditPublicationDto;
-import com.adastra.models.dtos.publication.PublicationDetailsDto;
-import com.adastra.models.dtos.publication.PublicationItemDto;
+import com.adastra.models.dtos.publication.*;
 import com.adastra.models.exceptions.ObjectNotFoundException;
 import com.adastra.models.principal.AppUserDetails;
 import com.adastra.repositories.PublicationRepository;
 import com.adastra.repositories.UserRepository;
+import com.adastra.repositories.specifications.PublicationSpecification;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,5 +62,9 @@ public class PublicationService {
         publication.setImage(editPublicationDto.getImage());
         publication.setDescription(editPublicationDto.getDescription());
         publicationRepository.save(publication);
+    }
+
+    public Page<PublicationItemDto> getAllPublicationItems(Pageable pageable, SearchPublicationDto searchPublicationDto) {
+        return publicationRepository.findAll(new PublicationSpecification(searchPublicationDto), pageable).map(PublicationItemDto::new);
     }
 }
