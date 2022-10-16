@@ -1,7 +1,7 @@
 package com.adastra.models.enumerations.publication;
 
 public enum SearchPublicationCriteria {
-    EVERYTHING("Everything"), TITLE("Title"), DESCRIPTION("Description"), USER("User");
+    TITLE("Title"), DESCRIPTION("Description"), USER("User");
 
     private final String name;
 

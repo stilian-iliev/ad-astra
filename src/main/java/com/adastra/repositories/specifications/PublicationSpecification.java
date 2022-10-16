@@ -21,27 +21,24 @@ public class PublicationSpecification implements Specification<Publication> {
         Predicate p = criteriaBuilder.conjunction();
         if (searchPublicationDto.getQuery() != null && !searchPublicationDto.getQuery().isEmpty()) {
             switch (searchPublicationDto.getSearchBy()) {
-                case EVERYTHING -> {
-                    //todo
-                }
                 case TITLE -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.equal(root.get("title"), searchPublicationDto.getQuery()))
+                        criteriaBuilder.and(criteriaBuilder.like(root.get("title"), "%"+searchPublicationDto.getQuery()+"%"))
                 );
                 case USER -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.equal(root.join("user").get("username"), searchPublicationDto.getQuery()))
+                        criteriaBuilder.and(criteriaBuilder.like(root.join("user").get("username"), "%"+searchPublicationDto.getQuery()+"%"))
                 );
                 case DESCRIPTION -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.equal(root.get("description"), searchPublicationDto.getQuery()))
+                        criteriaBuilder.and(criteriaBuilder.like(root.get("description"), "%"+searchPublicationDto.getQuery()+"%"))
                 );
             }
 
         }
 
         switch (searchPublicationDto.getSortBy()){
-            case NEWEST -> query.orderBy();
-            case OLDEST -> query.orderBy();
-            case AZ -> query.orderBy();
-            case ZA -> query.orderBy();
+            case NEWEST -> query.orderBy(criteriaBuilder.desc(root.get("publicationTime")));
+            case OLDEST -> query.orderBy(criteriaBuilder.asc(root.get("publicationTime")));
+            case AZ -> query.orderBy(criteriaBuilder.asc(root.get(searchPublicationDto.getSearchBy().getName().toLowerCase())));
+            case ZA -> query.orderBy(criteriaBuilder.desc(root.get(searchPublicationDto.getSearchBy().getName().toLowerCase())));
         }
         return p;
     }
