@@ -21,28 +21,28 @@ public class PublicationSpecification implements Specification<Publication> {
         Predicate p = criteriaBuilder.conjunction();
         if (searchPublicationDto.getQuery() != null && !searchPublicationDto.getQuery().isEmpty()) {
             switch (searchPublicationDto.getSearchBy()) {
-                case EVERYTHING -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.equal(root.get("title"), searchPublicationDto.getQuery()))
-                );
+                case EVERYTHING -> {
+                    //todo
+                }
                 case TITLE -> p.getExpressions().add(
                         criteriaBuilder.and(criteriaBuilder.equal(root.get("title"), searchPublicationDto.getQuery()))
                 );
                 case USER -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.equal(root.get("title"), searchPublicationDto.getQuery()))
+                        criteriaBuilder.and(criteriaBuilder.equal(root.join("user").get("username"), searchPublicationDto.getQuery()))
                 );
                 case DESCRIPTION -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.equal(root.get("title"), searchPublicationDto.getQuery()))
+                        criteriaBuilder.and(criteriaBuilder.equal(root.get("description"), searchPublicationDto.getQuery()))
                 );
             }
 
         }
 
-//        switch (searchPublicationDto.getSortBy()){
-//            case NEWEST -> query.orderBy();
-//            case OLDEST -> query.orderBy();
-//            case AZ -> query.orderBy();
-//            case ZA -> query.orderBy();
-//        }
+        switch (searchPublicationDto.getSortBy()){
+            case NEWEST -> query.orderBy();
+            case OLDEST -> query.orderBy();
+            case AZ -> query.orderBy();
+            case ZA -> query.orderBy();
+        }
         return p;
     }
 }

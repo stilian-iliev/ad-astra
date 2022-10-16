@@ -34,6 +34,8 @@ public class PublicationController {
             @PageableDefault(
             page = 0,
             size = 20)Pageable pageable){
+        if (!model.containsAttribute("searchPublicationDto"))
+            model.addAttribute("searchPublicationDto", new SearchPublicationDto());
         if (!model.containsAttribute("publications"))
             model.addAttribute("publications", publicationService.getAllPublicationItems(pageable, searchPublicationDto));
         return "publications";

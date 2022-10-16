@@ -21,20 +21,20 @@
         <div class="sidebar col-md-8">
             <div class="widget user_widget_search">
                 <h2>Search</h2>
-                <form id="user_wiget_search_form" class="user_wiget_search_form" th:method="GET" th:action="@{/publications/all}">
+                <form id="user_wiget_search_form" class="user_wiget_search_form" th:method="GET" th:action="@{/publications/all}" th:object="${searchPublicationDto}">
                     <div class="form-group">
                         <label for="search-term">Search term</label>
-                        <input type="text" class="form-control" id="search-term" placeholder="Search term" name="query" style="width: 94.25%;">
+                        <input type="text" class="form-control" id="search-term" placeholder="Search term" th:field="*{query}" style="width: 94.25%;">
                     </div>
                     <div class="form-group">
                         <label for="sort">Sort</label>
-                        <select class="form-control custom-select" id="sort">
+                        <select class="form-control custom-select" id="sort" th:field="*{sortBy}">
                             <option th:each="o : ${T(com.adastra.models.enumerations.publication.SearchPublicationSort).values()}" th:value="${o}" th:text="${o.getName()}"></option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="filter">Search By</label>
-                        <select class="form-control custom-select" id="filter">
+                        <select class="form-control custom-select" id="filter" th:field="*{searchBy}">
                             <option th:each="o : ${T(com.adastra.models.enumerations.publication.SearchPublicationCriteria).values()}" th:value="${o}" th:text="${o.getName()}"></option>
                         </select>
                     </div>
