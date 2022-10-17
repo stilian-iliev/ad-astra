@@ -44,10 +44,6 @@ public class PublicationService {
         return publicationRepository.findById(id).map(PublicationDetailsDto::new).orElseThrow(() -> new ObjectNotFoundException("Publication not found"));
     }
 
-    public Page<PublicationItemDto> getAllPublicationItems(Pageable pageable) {
-        return publicationRepository.findAll(pageable).map(PublicationItemDto::new);
-    }
-
     public Publication getById(UUID id) {
         return publicationRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Publication not found"));
     }

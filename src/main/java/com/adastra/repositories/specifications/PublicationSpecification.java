@@ -19,26 +19,29 @@ public class PublicationSpecification implements Specification<Publication> {
     @Override
     public Predicate toPredicate(Root<Publication> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Predicate p = criteriaBuilder.conjunction();
-        if (searchPublicationDto.getQuery() != null && !searchPublicationDto.getQuery().isEmpty()) {
+        if (searchPublicationDto.getQuery() != null && !searchPublicationDto.getQuery().isEmpty() && searchPublicationDto.getSearchBy() != null) {
             switch (searchPublicationDto.getSearchBy()) {
                 case TITLE -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.like(root.get("title"), "%"+searchPublicationDto.getQuery()+"%"))
+                        criteriaBuilder.and(criteriaBuilder.like(root.get("title"), "%" + searchPublicationDto.getQuery() + "%"))
                 );
                 case USER -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.like(root.join("user").get("username"), "%"+searchPublicationDto.getQuery()+"%"))
+                        criteriaBuilder.and(criteriaBuilder.like(root.join("user").get("username"), "%" + searchPublicationDto.getQuery() + "%"))
                 );
                 case DESCRIPTION -> p.getExpressions().add(
-                        criteriaBuilder.and(criteriaBuilder.like(root.get("description"), "%"+searchPublicationDto.getQuery()+"%"))
+                        criteriaBuilder.and(criteriaBuilder.like(root.get("description"), "%" + searchPublicationDto.getQuery() + "%"))
                 );
             }
 
         }
-
-        switch (searchPublicationDto.getSortBy()){
-            case NEWEST -> query.orderBy(criteriaBuilder.desc(root.get("publicationTime")));
-            case OLDEST -> query.orderBy(criteriaBuilder.asc(root.get("publicationTime")));
-            case AZ -> query.orderBy(criteriaBuilder.asc(root.get(searchPublicationDto.getSearchBy().getName().toLowerCase())));
-            case ZA -> query.orderBy(criteriaBuilder.desc(root.get(searchPublicationDto.getSearchBy().getName().toLowerCase())));
+        if (searchPublicationDto.getSortBy() != null) {
+            switch (searchPublicationDto.getSortBy()) {
+                case NEWEST -> query.orderBy(criteriaBuilder.desc(root.get("publicationTime")));
+                case OLDEST -> query.orderBy(criteriaBuilder.asc(root.get("publicationTime")));
+                case AZ ->
+                        query.orderBy(criteriaBuilder.asc(root.get(searchPublicationDto.getSearchBy().getName().toLowerCase())));
+                case ZA ->
+                        query.orderBy(criteriaBuilder.desc(root.get(searchPublicationDto.getSearchBy().getName().toLowerCase())));
+            }
         }
         return p;
     }

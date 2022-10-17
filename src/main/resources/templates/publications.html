@@ -61,14 +61,11 @@
     </div>
     <div class="row space-top">
         <div class="pagination center">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a class="active" href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
+            <a th:href="@{/publications/all(page=0)}">&laquo;</a>
+            <a th:if="${publications.hasPrevious()}" th:href="@{/publications/all(page=${publications.getNumber() - 1})}" th:text="${publications.getNumber()}">1</a>
+            <a class="active" href="#" th:text="${publications.getNumber() + 1}">2</a>
+            <a th:if="${publications.hasNext()}" th:href="@{/publications/all(page=${publications.getNumber() + 1})}" th:text="${publications.getNumber() + 2}">3</a>
+            <a th:href="@{/publications/all(page=${publications.getTotalPages() - 1})}">&raquo;</a>
         </div>
     </div>
 

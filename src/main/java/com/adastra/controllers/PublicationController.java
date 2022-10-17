@@ -1,11 +1,9 @@
 package com.adastra.controllers;
 
-import com.adastra.models.dtos.publication.CreatePublicationDto;
-import com.adastra.models.dtos.publication.EditPublicationDto;
-import com.adastra.models.dtos.publication.PublicationDetailsDto;
-import com.adastra.models.dtos.publication.SearchPublicationDto;
+import com.adastra.models.dtos.publication.*;
 import com.adastra.models.principal.AppUserDetails;
 import com.adastra.services.PublicationService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -30,7 +28,7 @@ public class PublicationController {
     }
 
     @GetMapping("/all")
-    public String getExplore(Model model , SearchPublicationDto searchPublicationDto,
+    public String getExplore(Model model , @Valid SearchPublicationDto searchPublicationDto,
             @PageableDefault(
             page = 0,
             size = 20)Pageable pageable){
@@ -38,6 +36,7 @@ public class PublicationController {
             model.addAttribute("searchPublicationDto", new SearchPublicationDto());
         if (!model.containsAttribute("publications"))
             model.addAttribute("publications", publicationService.getAllPublicationItems(pageable, searchPublicationDto));
+        Page<PublicationItemDto> allPublicationItems = publicationService.getAllPublicationItems(pageable, searchPublicationDto);
         return "publications";
     }
 

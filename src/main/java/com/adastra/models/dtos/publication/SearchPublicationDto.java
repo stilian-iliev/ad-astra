@@ -3,6 +3,8 @@ package com.adastra.models.dtos.publication;
 import com.adastra.models.enumerations.publication.SearchPublicationSort;
 import com.adastra.models.enumerations.publication.SearchPublicationCriteria;
 
+import javax.validation.constraints.NotEmpty;
+
 public class SearchPublicationDto {
     private String query;
     private SearchPublicationCriteria searchBy;
