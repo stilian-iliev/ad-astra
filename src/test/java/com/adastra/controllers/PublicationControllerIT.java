@@ -48,7 +48,7 @@ public class PublicationControllerIT {
         testAdmin = testDataUtils.createTestAdmin("admin", "password");
 
         testUserPublication = testDataUtils.createTestPublication("userPublication", "userPublicationImage", testUser);
-        testAdminPublication = testDataUtils.createTestPublication("adminPublication", "adminPublicationImage", testUser);
+        testAdminPublication = testDataUtils.createTestPublication("adminPublication", "adminPublicationImage", testAdmin);
     }
 
     @AfterEach
@@ -121,8 +121,8 @@ public class PublicationControllerIT {
     @Test
     @WithUserDetails(value = "user", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void testEditPageShowForNotOwner() throws Exception {
-//        mockMvc.perform(get("/publications/" + testAdminPublication.getId() + "/edit"))
-//                .andExpect(status().isForbidden());
+        mockMvc.perform(get("/publications/" + testAdminPublication.getId() + "/edit"))
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class PublicationControllerIT {
                         .param("title", "editedT")
                         .param("image", "editedI")
                         .with(csrf()))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isForbidden());
 
         Publication publication = publicationRepository.findById(testUserPublication.getId()).get();
 
