@@ -67,7 +67,7 @@ public class PublicationController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or @publicationService.isOwner(#userDetails, #id)")
     @GetMapping("/{id}/edit")
-    public String getEdit(@PathVariable("id") UUID id, Model model) {
+    public String getEdit(@PathVariable("id") UUID id, Model model, @AuthenticationPrincipal AppUserDetails userDetails) {
         if (!model.containsAttribute("editPublicationDto"))
             model.addAttribute("editPublicationDto", publicationService.getById(id));
         return "edit";
@@ -75,7 +75,7 @@ public class PublicationController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or @publicationService.isOwner(#userDetails, #id)")
     @PutMapping("/{id}")
-    public String edit(@Valid EditPublicationDto editPublicationDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, @PathVariable("id") UUID id) {
+    public String edit(@Valid EditPublicationDto editPublicationDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, @PathVariable("id") UUID id, @AuthenticationPrincipal AppUserDetails userDetails) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editPublicationDto", editPublicationDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editPublicationDto", bindingResult);

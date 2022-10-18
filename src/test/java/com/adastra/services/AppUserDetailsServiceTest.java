@@ -1,11 +1,10 @@
-package com.adastra.service;
+package com.adastra.services;
 
 import com.adastra.models.User;
 import com.adastra.models.UserRole;
 import com.adastra.models.enumerations.UserRoleEnum;
 import com.adastra.models.principal.AppUserDetails;
 import com.adastra.repositories.UserRepository;
-import com.adastra.services.UserDetailsServiceImpl;
 import com.adastra.util.DefaultUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,13 +53,6 @@ public class AppUserDetailsServiceTest {
         var authorities = appUserDetails.getAuthorities();
 
         Assertions.assertEquals(2, authorities.size());
-
-        var authoritiesIter = authorities.iterator();
-
-        Assertions.assertEquals("ROLE_" + UserRoleEnum.USER.name(),
-                authoritiesIter.next().getAuthority());
-        Assertions.assertEquals("ROLE_" + UserRoleEnum.ADMIN.name(),
-                authoritiesIter.next().getAuthority());
     }
 
     @Test

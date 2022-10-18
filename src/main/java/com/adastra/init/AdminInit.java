@@ -22,13 +22,13 @@ public class AdminInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (userRepository.count() == 0) {
-            User admin = new User();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("topsecret"));
-            admin.addRole(roleRepository.findByName(UserRoleEnum.USER));
-            admin.addRole(roleRepository.findByName(UserRoleEnum.ADMIN));
-            userRepository.save(admin);
-        }
+//        if (userRepository.count() == 0) {
+//            User admin = new User();
+//            admin.setUsername("admin");
+//            admin.setPassword(passwordEncoder.encode("topsecret"));
+//            admin.addRole(roleRepository.findByName(UserRoleEnum.USER));
+//            admin.addRole(roleRepository.findByName(UserRoleEnum.ADMIN));
+//            userRepository.save(admin);
+//        }
     }
 }

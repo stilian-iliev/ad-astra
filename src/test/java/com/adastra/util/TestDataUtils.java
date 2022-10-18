@@ -24,7 +24,7 @@ public class TestDataUtils {
         this.passwordEncoder = passwordEncoder;
     }
 
-    private void initRoles() {
+    public void initRoles() {
         for (UserRoleEnum role : UserRoleEnum.values()) {
 
             if (!roleRepository.existsByName(role)){
@@ -62,8 +62,8 @@ public class TestDataUtils {
     }
 
     public void cleanUpDatabase() {
+        publicationRepository.deleteAll();
         userRepository.deleteAll();
         roleRepository.deleteAll();
-        publicationRepository.deleteAll();
     }
 }
