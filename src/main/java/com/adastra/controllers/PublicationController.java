@@ -36,7 +36,6 @@ public class PublicationController {
             model.addAttribute("searchPublicationDto", new SearchPublicationDto());
         if (!model.containsAttribute("publications"))
             model.addAttribute("publications", publicationService.getAllPublicationItems(pageable, searchPublicationDto));
-        Page<PublicationItemDto> allPublicationItems = publicationService.getAllPublicationItems(pageable, searchPublicationDto);
         return "publications";
     }
 
