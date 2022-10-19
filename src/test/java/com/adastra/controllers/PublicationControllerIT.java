@@ -1,4 +1,5 @@
 package com.adastra.controllers;
+
 import com.adastra.models.Publication;
 import com.adastra.models.User;
 import com.adastra.repositories.PublicationRepository;
@@ -202,6 +203,62 @@ public class PublicationControllerIT {
 
         Assertions.assertEquals(testUserPublication.getTitle(), publication.getTitle());
         Assertions.assertEquals(testUserPublication.getImage(), publication.getImage());
+    }
+
+    @Test
+    @WithUserDetails(value = "user", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void testEditPublicationWithBadRequest() throws Exception {
+        mockMvc.perform(put("/publications/" + testUserPublication.getId())
+                        .param("title", "")
+                        .param("image", "editedI")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/publications/" + testUserPublication.getId() + "/edit"));
+
+        Publication publication = publicationRepository.findById(testUserPublication.getId()).get();
+
+        Assertions.assertEquals(testUserPublication.getTitle(), publication.getTitle());
+        Assertions.assertEquals(testUserPublication.getImage(), publication.getImage());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void testDeletePublicationForAnonymous() throws Exception {
+        mockMvc.perform(delete("/publications/" + testUserPublication.getId()))
+                .andExpect(status().isForbidden());
+
+        Assertions.assertTrue(publicationRepository.findById(testUserPublication.getId()).isPresent());
+    }
+
+    @Test
+    @WithUserDetails(value = "user", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void testDeletePublicationForNotOwner() throws Exception {
+        mockMvc.perform(delete("/publications/" + testAdminPublication.getId()))
+                .andExpect(status().isForbidden());
+
+        Assertions.assertTrue(publicationRepository.findById(testAdminPublication.getId()).isPresent());
+    }
+
+    @Test
+    @WithUserDetails(value = "user", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void testDeletePublicationForOwner() throws Exception {
+        mockMvc.perform(delete("/publications/" + testUserPublication.getId())
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/publications/all"));
+
+        Assertions.assertTrue(publicationRepository.findById(testUserPublication.getId()).isEmpty());
+    }
+
+    @Test
+    @WithUserDetails(value = "admin", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    void testDeletePublicationForAdmin() throws Exception {
+        mockMvc.perform(delete("/publications/" + testUserPublication.getId())
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/publications/all"));
+
+        Assertions.assertTrue(publicationRepository.findById(testUserPublication.getId()).isEmpty());
     }
 
 
