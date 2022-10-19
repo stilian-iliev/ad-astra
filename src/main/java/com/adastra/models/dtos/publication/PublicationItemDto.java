@@ -11,7 +11,11 @@ public class PublicationItemDto {
 
     public PublicationItemDto(Publication publication) {
         this.id = publication.getId();
-        this.title = publication.getTitle();
+        if (publication.getTitle().length() > 15) {
+            this.title = publication.getTitle().substring(0, 15) + "...";
+        } else {
+            this.title = publication.getTitle();
+        }
         this.image = publication.getImage();
     }
 
