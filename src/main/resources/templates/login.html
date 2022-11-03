@@ -5,9 +5,10 @@
     <title>Login</title>
 </head>
 <body>
-<th:block th:include="~{/fragments/header.html}"> </th:block>
+<th:block th:include="~{/fragments/header.html}"></th:block>
 <script>
     document.querySelector("#loginLink").classList.add("active")
+
 </script>
 
 <div class="container">
@@ -29,9 +30,19 @@
                     <label class="form-control-label" for="password">Password</label>
                     <input class="form-control" id="password" type="password" name="password">
                 </div>
-                <input type="submit" class="btn btn-primary" value="Login" />
+                <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+
+
+                <input type="submit" class="btn btn-primary" value="Login"/>
+
+                <div class="google-btn row">
+                    <div class="google-icon-wrapper">
+                        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                    </div>
+                </div>
             </div>
         </div>
+
     </form>
 </div>
 </body>
