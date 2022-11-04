@@ -2,6 +2,7 @@ package com.adastra.configuration;
 
 import com.adastra.models.enumerations.UserRoleEnum;
 import com.adastra.repositories.UserRepository;
+import com.adastra.services.OAuth2SuccessHandler;
 import com.adastra.services.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +32,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, OAuth2SuccessHandler oAuth2SuccessHandler) throws Exception {
         http
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
@@ -54,7 +55,11 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .clearAuthentication(true);
+                .clearAuthentication(true)
+                .and()
+                .oauth2Login()
+                .loginPage("/oauth2/login")
+                .successHandler(oAuth2SuccessHandler);
 
         return http.build();
     }

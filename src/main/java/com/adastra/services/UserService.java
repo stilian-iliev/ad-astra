@@ -8,7 +8,6 @@ import com.adastra.models.exceptions.ObjectNotFoundException;
 import com.adastra.repositories.PublicationRepository;
 import com.adastra.repositories.UserRepository;
 import com.adastra.repositories.UserRoleRepository;
-import com.sun.jdi.ObjectCollectedException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +57,18 @@ public class UserService {
         );
 
         SecurityContextHolder.getContext().setAuthentication(auth);
+    }
+
+    public void oauthLogin(OAuth2AuthenticationToken token) {
+        String email = token.getPrincipal().getAttribute("email");
+        User user = userRepository.findByUsername(email);
+        if (user == null) {
+            User newUser = new User();
+            newUser.setUsername(email);
+            newUser.addRole(roleRepository.findByName(UserRoleEnum.USER));
+            userRepository.save(newUser);
+        }
+        login(email);
     }
 
     public List<PublicationItemDto> getAllPublications(UUID id) {
