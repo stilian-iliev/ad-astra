@@ -9,17 +9,21 @@ spring:
     hibernate:
       ddl-auto: update
       defer-datasource-initialization: true
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${GOOGLE_ID:}
-            client-secret: ${GOOGLE_SECRET:}
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: ${GOOGLE_ID:}
+#            client-secret: ${GOOGLE_SECRET:}
   mvc:
     hiddenmethod:
       filter:
         enabled: true
+  captcha:
+    siteKey: ${CAPTCHA_SITE:}
+    secretKey: ${CAPTCHA_SECRET:}
+    verifyUrl: ${CAPTCHA_URL:}
 #logging:
 #  level:
 #    org.springframework: DEBUG
