@@ -1,17 +1,16 @@
 package com.adastra.controllers;
 
 import com.adastra.models.dtos.user.RegisterDto;
-import com.adastra.repositories.UserRoleRepository;
 import com.adastra.services.UserService;
-import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -53,9 +52,11 @@ public class AuthController {
 
     @PostMapping("/login-error")
     public String onFailedLogin(@ModelAttribute("username") String userName,
+                                @RequestAttribute(WebAttributes.AUTHENTICATION_EXCEPTION) AuthenticationException idk,
                                 RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("username", userName);
-        redirectAttributes.addFlashAttribute("badCredentials", true);
+        redirectAttributes.addFlashAttribute("hasError", true);
+        redirectAttributes.addFlashAttribute("errorMessage", idk.getMessage());
         return "redirect:/login";
     }
 }

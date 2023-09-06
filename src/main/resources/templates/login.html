@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <th:block th:replace="~{/fragments/head.html}"></th:block>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Login</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
     <form th:method="post" th:action="@{/login}">
         <div class="row space-top">
             <div class="col-md-4">
-                <p class="err-text" th:if="${badCredentials}">Incorrect username or password</p>
+                <p class="err-text" th:if="${hasError}" th:text="${errorMessage}"></p>
                 <div class="form-group">
                     <label class="form-control-label" for="username">Username</label>
                     <input class="form-control" id="username" type="text" name="username" th:value="${username}">
@@ -32,6 +33,7 @@
                 </div>
                 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
+                <div class="g-recaptcha" data-sitekey="6Ld-19AnAAAAALe6INfJF_K_WOVCxRmSiBWWAiSv"></div>
 
                 <input type="submit" class="btn btn-primary" value="Login"/>
 

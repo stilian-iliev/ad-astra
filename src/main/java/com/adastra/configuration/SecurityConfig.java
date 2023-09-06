@@ -2,6 +2,7 @@ package com.adastra.configuration;
 
 import com.adastra.models.enumerations.UserRoleEnum;
 import com.adastra.repositories.UserRepository;
+import com.adastra.configuration.filters.CaptchaAuthenticationFilter;
 import com.adastra.services.OAuth2SuccessHandler;
 import com.adastra.services.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -19,7 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new Pbkdf2PasswordEncoder();
@@ -34,6 +34,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, OAuth2SuccessHandler oAuth2SuccessHandler) throws Exception {
         http
+                .addFilterBefore(new CaptchaAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/admin").hasRole(UserRoleEnum.ADMIN.name())
